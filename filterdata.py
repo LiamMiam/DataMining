@@ -20,8 +20,12 @@ print(f"Nombre de lignes initial : {len(df)}")
 # Supprime les espaces autour des noms de colonnes
 df.columns = df.columns.str.strip()
 
+df.info()
+
+
 # Supprime les colonnes vides dues aux ,,, à la fin des lignes
 df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
+
 
 # ======================================================
 # CONVERSION DES TYPES
@@ -76,14 +80,14 @@ report_filter("Doublons", before, len(df), duplicates)
 # ======================================================
 # FILTRE GÉOGRAPHIQUE (LYON LARGE)
 # ======================================================
-# Latitude ≈ 45 ± 5
-# Longitude ≈ 4 ± 5
+# Latitude ≈ 45 ± 0.05
+# Longitude ≈ 4.8357 ± 0.05
 before = len(df)
 
 invalid_geo = df[
     df["lat"].isna() | df["long"].isna() |
-    (df["lat"] < 40) | (df["lat"] > 50) |
-    (df["long"] < -1) | (df["long"] > 9)
+    (df["lat"] < 45.7640-0.05) | (df["lat"] > 45.7640+0.05) |
+    (df["long"] < 4.8357-0.05) | (df["long"] > 4.8357+0.05)
 ]
 
 df = df.drop(invalid_geo.index)
@@ -114,6 +118,42 @@ df = df.drop(invalid_dates.index)
 report_filter("Dates incohérentes", before, len(df), invalid_dates)
 
 # ======================================================
+# CRÉATION D'UNE DATE D'UPLOAD COMPLÈTE pour pouvoir
+# gérer les doublons sur ID et garder que le plus récent
+# ======================================================
+df["upload_datetime"] = pd.to_datetime(
+    dict(
+        year=df["date_upload_year"],
+        month=df["date_upload_month"],
+        day=df["date_upload_day"],
+        hour=df["date_upload_hour"],
+        minute=df["date_upload_minute"],
+    ),
+    errors="coerce"
+)
+
+# ======================================================
+# DOUBLONS SUR ID → GARDER LA PLUS RÉCENTE
+# ======================================================
+before = len(df)
+
+# Tri par date d'upload croissante
+df = df.sort_values("upload_datetime")
+
+# Doublons sur l'id : on garde la dernière (donc la plus récente)
+duplicates_id = df[df.duplicated(subset="id", keep="last")]
+df = df.drop_duplicates(subset="id", keep="last")
+
+report_filter("Doublons sur ID (photo la plus récente gardée)", before, len(df), duplicates_id)
+
+# =====================================================
+# Enlever la date temporaire
+# =====================================================
+df = df.drop(columns=["upload_datetime"])
+
+
+
+# ======================================================
 # SAUVEGARDE dans un nouveau CSV
 # ======================================================
 df.to_csv(OUTPUT_CSV, index=False)
@@ -121,3 +161,7 @@ df.to_csv(OUTPUT_CSV, index=False)
 print("\n Nettoyage terminé")
 print(f"Nombre de lignes finales : {len(df)}")
 print(f"Fichier sauvegardé : {OUTPUT_CSV}")
+
+
+
+# Si quelqu'un modifie la description de sa photo, (probleme doublon)
