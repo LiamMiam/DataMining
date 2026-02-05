@@ -60,7 +60,7 @@ def process_texts_and_extract_keywords(texts):
     keywords = extract_top_keywords(processed_texts, top_n=5)
     return keywords
 
-def format_keywords(keywords, max_words=5):
+def format_keywords(keywords, max_words=3):
     """
     Transforme la liste de tuples (mot, score) en chaîne lisible pour le popup.
     """
