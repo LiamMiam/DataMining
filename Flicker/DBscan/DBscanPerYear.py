@@ -5,18 +5,25 @@ import folium
 from sklearn.cluster import DBSCAN
 from scipy.spatial import ConvexHull
 
+import sys
+import os
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, PROJECT_ROOT)
+
 from Flicker.textMining.NER import process_texts_and_extract_keywords, format_keywords
+
+
 
 # =========================
 # CONFIG
 # =========================
-CSV_PATH = "data/flickr_data2_clean.csv"
-OUT_HTML = "lyon_dbscan_by_year_slider.html"
+CSV_PATH = "Flicker/data/flickr_data2_clean.csv"
+OUT_HTML = "Flicker/DBscan/dbscanPerYear.html"
 
-YEAR_COL = "date_taken_year"   # adapte si besoin
+YEAR_COL = "date_taken_year"   # date ou la photo a été prise (pas upload)
 USER_COL = "user"
 
-MAX_POINTS_PER_YEAR = 30000    # pour ne pas exploser (optionnel)
+MAX_POINTS_PER_YEAR = 50000   
 MIN_POINTS_CLUSTER = 50       # dbscan min_samples
 EPS_METERS = 50                # eps en mètres
 

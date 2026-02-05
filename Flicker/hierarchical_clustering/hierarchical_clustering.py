@@ -7,7 +7,7 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 import matplotlib.pyplot as plt
 
 # Charger le CSV nettoyé
-df = pd.read_csv("data/flickr_data2_clean.csv")
+df = pd.read_csv("Flicker/data/flickr_data2_clean.csv")
 
 print(f"Total points : {len(df)}")
 
@@ -48,8 +48,8 @@ plt.title('Dendrogramme - Clustering Hiérarchique')
 plt.xlabel('Index des points')
 plt.ylabel('Distance')
 dendrogram(linkage_matrix, truncate_mode='lastp', p=30)
-plt.savefig('dendrogram.png', dpi=150, bbox_inches='tight')
-print("Dendrogramme sauvegardé : dendrogram.png")
+plt.savefig('Flicker/hierarchical_clustering/dendrogram.png', dpi=150, bbox_inches='tight')
+print("Dendrogramme sauvegardé : Flicker/hierarchical_clustering/dendrogram.png")
 plt.close()
 
 # Carte Folium
@@ -115,5 +115,5 @@ for cluster_id in df_cluster_sample["cluster"].unique():
     ).add_to(map_lyon)
 
 # Sauvegarde
-map_lyon.save("lyon_hierarchical_clusters.html")
-print("\nCarte générée : lyon_hierarchical_clusters.html")
+map_lyon.save("Flicker/hierarchical_clustering/hierarchical_clusters.html")
+print("\nCarte générée : Flicker/hierarchical_clustering/hierarchical_clusters.html")

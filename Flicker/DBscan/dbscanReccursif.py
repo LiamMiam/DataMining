@@ -4,8 +4,12 @@ import folium  # pour la carte leaflet
 from sklearn.cluster import DBSCAN
 from scipy.spatial import ConvexHull  # pour faire un polygone autour des clusters
 
-from Flicker.textMining.NER import process_texts_and_extract_keywords, format_keywords
+import sys
+import os
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, PROJECT_ROOT)
 
+from Flicker.textMining.NER import process_texts_and_extract_keywords, format_keywords
 # ======================================================
 # CONFIG
 # ======================================================
@@ -27,7 +31,7 @@ USER_COL = "user"
 # ======================================================
 # LOAD
 # ======================================================
-df = pd.read_csv("data/flickr_data2_clean.csv")
+df = pd.read_csv("Flicker/data/flickr_data2_clean.csv")
 print(f"Total points : {len(df)}")
 
 # Sous-échantillon pour clustering (100 000 points max)
@@ -196,5 +200,6 @@ for cluster_id in df_valid_clusters["cluster"].unique():
         continue
 
 # Sauvegarde
-map_lyon.save("lyon_clusters_filtered.html")
-print("Carte générée : lyon_clusters_filtered.html")
+# Sauvegarde
+map_lyon.save("Flicker/DBscan/dbscanReccursif.html")
+print("Carte générée : Flicker/DBscan/dbscanReccursif.html")
