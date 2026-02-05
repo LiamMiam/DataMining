@@ -4,11 +4,11 @@ import folium #pour la carte leaflet
 from sklearn.cluster import DBSCAN
 from scipy.spatial import ConvexHull #pour faire un polygone autour des clusters
 
-from NER import process_texts_and_extract_keywords, format_keywords
+from ..textMining.NER import process_texts_and_extract_keywords, format_keywords
 
 
 # Charger le CSV déjà nettoyé
-df = pd.read_csv("flickr_data2_clean.csv")
+df = pd.read_csv("data/flickr_data2_clean.csv")
 
 
 print(f"Total points : {len(df)}")

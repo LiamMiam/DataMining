@@ -5,12 +5,12 @@ import folium
 from sklearn.cluster import DBSCAN
 from scipy.spatial import ConvexHull
 
-from NER import process_texts_and_extract_keywords, format_keywords
+from Flicker.textMining.NER import process_texts_and_extract_keywords, format_keywords
 
 # =========================
 # CONFIG
 # =========================
-CSV_PATH = "flickr_data2_clean.csv"
+CSV_PATH = "data/flickr_data2_clean.csv"
 OUT_HTML = "lyon_dbscan_by_year_slider.html"
 
 YEAR_COL = "date_taken_year"   # adapte si besoin

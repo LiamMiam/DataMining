@@ -4,7 +4,7 @@ import folium  # pour la carte leaflet
 from sklearn.cluster import DBSCAN
 from scipy.spatial import ConvexHull  # pour faire un polygone autour des clusters
 
-from NER import process_texts_and_extract_keywords, format_keywords
+from Flicker.textMining.NER import process_texts_and_extract_keywords, format_keywords
 
 # ======================================================
 # CONFIG
@@ -27,7 +27,7 @@ USER_COL = "user"
 # ======================================================
 # LOAD
 # ======================================================
-df = pd.read_csv("flickr_data2_clean.csv")
+df = pd.read_csv("data/flickr_data2_clean.csv")
 print(f"Total points : {len(df)}")
 
 # Sous-échantillon pour clustering (100 000 points max)

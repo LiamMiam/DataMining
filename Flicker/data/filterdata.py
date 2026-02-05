@@ -3,8 +3,8 @@ import pandas as pd
 # ======================================================
 # CONFIGURATION
 # ======================================================
-INPUT_CSV = "flickr_data2.csv"
-OUTPUT_CSV = "flickr_data2_clean.csv"
+INPUT_CSV = "data/flickr_data2.csv"
+OUTPUT_CSV = "data/flickr_data2_clean.csv"
 
 # ======================================================
 # LECTURE DU CSV

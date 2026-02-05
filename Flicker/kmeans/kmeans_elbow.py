@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 # ======================================================
 # CONFIGURATION
 # ======================================================
-CSV_PATH = "flickr_data2_clean.csv"
+CSV_PATH = "data/flickr_data2_clean.csv"
 MAX_POINTS = 100000          # sous-échantillon pour accélérer
 K_MIN = 1
 K_MAX = 60
